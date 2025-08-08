@@ -137,7 +137,7 @@ export default function AboutPage() {
               <div className="text-4xl font-bold text-red-600 mb-2 group-hover:text-red-700 transition-colors duration-300 animate-pulse-slow group-hover:scale-125 transform transition-transform duration-300">
                 1000+
               </div>
-              <div className="text-light-blue-700 group-hover:text-light-900 transition-colors duration-300 font-medium">
+              <div className="text-red-300 group-hover:text-red-700 transition-colors duration-300 font-medium">
                 Lives Connected
               </div>
             </div>
@@ -145,7 +145,7 @@ export default function AboutPage() {
               <div className="text-4xl font-bold text-red-600 mb-2 group-hover:text-red-700 transition-colors duration-300 animate-pulse-slow group-hover:scale-125 transform transition-transform duration-300">
                 24/7
               </div>
-              <div className="text-gray-700 group-hover:text-gray-900 transition-colors duration-300 font-medium">
+              <div className="text-red-300 group-hover:text-red-700 transition-colors duration-300 font-medium">
                 Available Support
               </div>
             </div>
@@ -153,7 +153,7 @@ export default function AboutPage() {
               <div className="text-4xl font-bold text-red-600 mb-2 group-hover:text-red-700 transition-colors duration-300 animate-pulse-slow group-hover:scale-125 transform transition-transform duration-300">
                 50+
               </div>
-              <div className="text-gray-700 group-hover:text-gray-900 transition-colors duration-300 font-medium">
+              <div className="text-red-300 group-hover:text-red-700 transition-colors duration-300 font-medium">
                 Partner Hospitals
               </div>
             </div>
@@ -161,7 +161,7 @@ export default function AboutPage() {
               <div className="text-4xl font-bold text-red-600 mb-2 group-hover:text-red-700 transition-colors duration-300 animate-pulse-slow group-hover:scale-125 transform transition-transform duration-300">
                 95%
               </div>
-              <div className="text-gray-700 group-hover:text-gray-900 transition-colors duration-300 font-medium">
+              <div className="text-red-300 group-hover:text-red-700 transition-colors duration-300 font-medium">
                 Success Rate
               </div>
             </div>
