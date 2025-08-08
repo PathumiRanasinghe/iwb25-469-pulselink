@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Services() {
   const services = [
     {
@@ -9,36 +11,40 @@ export default function Services() {
       bgColor: "bg-gradient-to-br from-red-900/20 to-red-800/30",
       iconColor: "text-red-400",
       borderColor: "border-red-500/30",
+      link: "/services#organ-matching",
     },
     {
       id: 2,
-      title: "Donor Registration",
+      title: "Emergency Transport",
       description:
-        "Simple and secure donor registration process with comprehensive medical screening and verification.",
-      image: "🩸",
+        "Rapid coordination of emergency medical transport for time-critical organ deliveries.",
+      image: "🚁",
       bgColor: "bg-gradient-to-br from-green-900/20 to-green-800/30",
       iconColor: "text-green-400",
       borderColor: "border-green-500/30",
+      link: "/services#emergency-transport",
     },
     {
       id: 3,
-      title: "Recipient Support",
+      title: "Hospital Network",
       description:
-        "Complete support system for organ recipients including pre and post-transplant care coordination.",
+        "Comprehensive network connecting donor hospitals, transplant centers, and medical facilities.",
       image: "🏥",
       bgColor: "bg-gradient-to-br from-blue-900/20 to-blue-800/30",
       iconColor: "text-blue-400",
       borderColor: "border-blue-500/30",
+      link: "/services#hospital-network",
     },
     {
       id: 4,
-      title: "Medical Coordination",
+      title: "Patient Management",
       description:
-        "24/7 medical coordination between hospitals, donors, and recipients for seamless transplant procedures.",
-      image: "🚑",
+        "Complete patient lifecycle management from registration to post-transplant care.",
+      image: "�",
       bgColor: "bg-gradient-to-br from-orange-900/20 to-orange-800/30",
       iconColor: "text-orange-400",
       borderColor: "border-orange-500/30",
+      link: "/services#patient-management",
     },
   ];
 
@@ -78,11 +84,15 @@ export default function Services() {
                 <p className="text-gray-300 leading-relaxed mb-4">
                   {service.description}
                 </p>
-                <button
-                  className={`${service.iconColor} hover:text-white font-medium transition-colors group-hover:underline`}
+                <Link
+                  href={service.link}
+                  className={`${service.iconColor} hover:text-white font-medium transition-colors group-hover:underline inline-flex items-center`}
                 >
-                  Learn More →
-                </button>
+                  Learn More 
+                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </Link>
               </div>
             </div>
           ))}
