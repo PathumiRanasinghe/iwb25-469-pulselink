@@ -44,7 +44,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
       {/* Header */}
       <header className="bg-gray-800/50 backdrop-blur-sm border-b border-blue-500/30 px-6 py-4">
         <div className="flex items-center justify-between">
