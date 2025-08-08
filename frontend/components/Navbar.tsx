@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -13,9 +14,13 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center mr-3 shadow-lg">
-                <div className="w-4 h-4 bg-white rounded"></div>
-              </div>
+              <Image
+                src="/PulseLink logo.png"
+                alt="PulseLink Logo"
+                width={32}
+                height={32}
+                className="mr-3 drop-shadow-lg"
+              />
               <span className="text-xl font-bold text-white drop-shadow-xl">PulseLink</span>
             </div>
           </div>
