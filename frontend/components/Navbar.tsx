@@ -36,6 +36,9 @@ export default function Navbar() {
             <Link href="/contact" className="text-white hover:text-red-300 transition-colors drop-shadow-lg font-medium">
               Contact
             </Link>
+            <Link href="/dashboard" className="text-white hover:text-red-300 transition-colors drop-shadow-lg font-medium">
+              Dashboard
+            </Link>
             <Link 
               href="/login" 
               className=" text-white hover:text-red-300 transition-colors drop-shadow-lg font-semibold"
@@ -76,6 +79,9 @@ export default function Navbar() {
               </Link>
               <Link href="/contact" className="block px-3 py-2 text-white hover:text-red-300 hover:bg-white/10 rounded-lg transition-colors">
                 Contact
+              </Link>
+              <Link href="/dashboard" className="block px-3 py-2 text-white hover:text-red-300 hover:bg-white/10 rounded-lg transition-colors">
+                Dashboard
               </Link>
               <Link 
                 href="/login" 

@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,6 +32,8 @@ export default function LoginPage() {
       setIsLoading(false);
       // Handle login logic here
       console.log("Login attempt:", formData);
+      // Redirect to dashboard after successful login
+      router.push('/dashboard');
     }, 2000);
   };
 
