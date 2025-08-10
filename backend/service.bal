@@ -29,15 +29,14 @@ service / on new http:Listener(9090) {
 
     //signup
     resource function post register(RegisterRequest req) returns string|error {
-
         string id = uuid:createType1AsString();
         User user = {id, ...req};
 
         mongodb:Collection users = check self.pulselinkDB->getCollection("users");
         
-        //check email already exists
+        // Corrected duplicate check
         User? existingUser = check users->findOne({email: user.email});
-        if existingUser is () {
+        if existingUser is User {
             return error("Email already exists");
         }
 
