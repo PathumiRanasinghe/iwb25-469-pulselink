@@ -3,6 +3,7 @@ import Hero from "../../components/Hero";
 import Services from "../../components/Services";
 import WhyRegistration from "../../components/WhyRegistration";
 import Footer from "../../components/Footer";
+import TransitionDemo from "../../components/TransitionDemo";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Services />
       <WhyRegistration />
       <Footer />
+      <TransitionDemo />
     </div>
   );
 }

@@ -33,21 +33,24 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-8">
             <Link
               href="/about"
-              className="text-white hover:text-red-300 transition-colors drop-shadow-lg font-medium"
+              className="text-white hover:text-red-300 transition-all duration-300 drop-shadow-lg font-medium relative group"
             >
               About
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
             </Link>
             <Link
               href="/services"
-              className="text-white hover:text-red-300 transition-colors drop-shadow-lg font-medium"
+              className="text-white hover:text-red-300 transition-all duration-300 drop-shadow-lg font-medium relative group"
             >
               Services
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
             </Link>
             <Link
               href="/contact"
-              className="text-white hover:text-red-300 transition-colors drop-shadow-lg font-medium"
+              className="text-white hover:text-red-300 transition-all duration-300 drop-shadow-lg font-medium relative group"
             >
               Contact
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-300 transition-all duration-300 group-hover:w-full"></span>
             </Link>
 
             <Link href="/dashboard" className="text-white hover:text-red-300 transition-colors drop-shadow-lg font-medium">

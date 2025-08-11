@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import PageLoader from '../../../components/PageLoader';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
