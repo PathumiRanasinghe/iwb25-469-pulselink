@@ -50,6 +50,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
+              <Link href="/" className="flex items-center">
               <Image 
                 src="/PulseLink logo.png" 
                 alt="PulseLink" 
@@ -57,7 +58,9 @@ export default function Dashboard() {
                 height={32}
                 className="rounded"
               />
+              
               <span className="text-xl font-bold text-white">PulseLink</span>
+              </Link>
             </div>
           </div>
           <div className="flex items-center space-x-4">

@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function WhyRegistration() {
   const steps = [
     {
@@ -96,9 +97,10 @@ export default function WhyRegistration() {
               lives. Your registration could be the gift of life someone
               desperately needs.
             </p>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors shadow-lg hover:shadow-xl">
+                        
+            <Link href="/signup" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors shadow-lg hover:shadow-xl inline-block">
               Register Now
-            </button>
+            </Link>
           </div>
         </div>
       </div>
