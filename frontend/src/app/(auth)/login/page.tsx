@@ -4,17 +4,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { loginUser } from "@/utils/auth";
 
 export default function LoginPage() {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    email: "",
+    contactEmail: "", // Changed from email to contactEmail to match backend
     password: "",
     rememberMe: false,
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -22,24 +24,34 @@ export default function LoginPage() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+
+    // Clear error when user is typing
+    if (error) setError(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate login process
-    setTimeout(() => {
-      setIsLoading(false);
-      // Simple role check (replace with real logic later)
-      const isAdmin = formData.email === "admin@pulselink.com";
-      if (isAdmin) {
+    setError(null);
+
+    try {
+      const response = await loginUser(
+        formData.contactEmail,
+        formData.password
+      );
+
+      if (response.success) {
+        // If remember me is checked, cookies will be set with longer expiry in the production version
         router.push("/dashboard");
       } else {
-        // Set user as logged in (simulate with localStorage for now)
-        window.localStorage.setItem("isUserLoggedIn", "true");
-        router.push("/");
+        setError(response.message);
       }
-    }, 2000);
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -183,11 +195,18 @@ export default function LoginPage() {
                 <p className="text-gray-300">Access your PulseLink dashboard</p>
               </div>
 
+              {/* Display error message if any */}
+              {error && (
+                <div className="mb-6 p-3 bg-red-500/30 border border-red-500/50 rounded-lg text-red-200 text-sm">
+                  {error}
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Email Input */}
+                {/* Email Input - updated name to contactEmail */}
                 <div className="space-y-2">
                   <label
-                    htmlFor="email"
+                    htmlFor="contactEmail"
                     className="block text-sm font-medium text-gray-300"
                   >
                     Email Address
@@ -210,9 +229,9 @@ export default function LoginPage() {
                     </div>
                     <input
                       type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
+                      id="contactEmail"
+                      name="contactEmail"
+                      value={formData.contactEmail}
                       onChange={handleInputChange}
                       required
                       className="w-full pl-10 pr-4 py-3 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-200 bg-gray-700/50 backdrop-blur-sm text-white placeholder-gray-400"
@@ -221,7 +240,7 @@ export default function LoginPage() {
                   </div>
                 </div>
 
-                {/* Password Input */}
+                {/* Password Input - keeping your existing code with the same functionality */}
                 <div className="space-y-2">
                   <label
                     htmlFor="password"
@@ -299,7 +318,7 @@ export default function LoginPage() {
                   </div>
                 </div>
 
-                {/* Remember Me & Forgot Password */}
+                {/* Remember Me & Forgot Password - keeping your existing code */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <input
@@ -325,7 +344,7 @@ export default function LoginPage() {
                   </Link>
                 </div>
 
-                {/* Submit Button */}
+                {/* Submit Button - keeping your existing code */}
                 <button
                   type="submit"
                   disabled={isLoading}
@@ -359,10 +378,10 @@ export default function LoginPage() {
                   )}
                 </button>
 
-                {/* Sign Up Link */}
+                {/* Sign Up Link - keeping your existing code */}
                 <div className="text-center mt-6">
                   <p className="text-sm text-gray-400">
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <Link
                       href="/signup"
                       className="text-sky-300 font-medium hover:text-sky-400 transition-colors"
@@ -377,7 +396,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* CSS Animations */}
+      {/* CSS Animations - keeping your existing code */}
       <style jsx>{`
         @keyframes pulse-slow {
           0%,

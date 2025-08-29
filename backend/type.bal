@@ -1,16 +1,46 @@
-type RegisterRequest record {|
+// type RegisterRequest record {|
+//     string username;
+//     string email;
+//     string password;
+// |};
+
+// type LoginRequest record {|
+//     string email;
+//     string password;
+// |};
+
+type User record {|
+    readonly string id;
     string username;
     string email;
     string password;
 |};
 
-type LoginRequest record {|
-    string email;
+
+
+type HospitalRegisterRequest record {|
+    string hospitalName;
+    string contactPerson;
+    string contactEmail;
+    string contactPhone;
+    string address;
     string password;
 |};
-type User record {|
+
+
+type Hospital record {|
     readonly string id;
-    string username;
-    string email;
+    string hospitalName;
+    string contactPerson;
+    string contactEmail;
+    string contactPhone;
+    string address;
+    string password;
+    string role = "hospital";
+|};
+
+
+type LoginRequest record {|
+    string contactEmail;
     string password;
 |};

@@ -9,7 +9,17 @@ mongodb:Client mongoDb = check new ({
     connection: mongodb_uri
 });
 
-service / on new http:Listener(9090) {
+@http:ServiceConfig {
+    cors: {
+        allowOrigins: ["http://localhost:3000"],
+        allowHeaders: ["Content-Type", "Authorization"],
+        allowMethods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"],
+        allowCredentials: true,
+        maxAge: 3600
+    }
+}
+
+service /api on new http:Listener(9090) {
     private final mongodb:Database pulselinkDB;
 
     public function init() returns error? {
@@ -27,47 +37,105 @@ service / on new http:Listener(9090) {
                select user;
     }
 
-    //signup
-    resource function post register(RegisterRequest req) returns string|error {
-        string id = uuid:createType1AsString();
-        User user = {id, ...req};
+    // //signup
+    // resource function post register(RegisterRequest req) returns string|error {
+    //     string id = uuid:createType1AsString();
+    //     User user = {id, ...req};
 
-        mongodb:Collection users = check self.pulselinkDB->getCollection("users");
+    //     mongodb:Collection users = check self.pulselinkDB->getCollection("users");
         
-        // Corrected duplicate check
-        User? existingUser = check users->findOne({email: user.email});
-        if existingUser is User {
-            return error("Email already exists");
+    //     // Corrected duplicate check
+    //     User? existingUser = check users->findOne({email: user.email});
+    //     if existingUser is User {
+    //         return error("Email already exists");
+    //     }
+
+    //     string|crypto:Error hash = crypto:hashBcrypt(user.password);
+    //     if hash is crypto:Error {
+    //         return error("Failed to hash password");
+    //     }
+    //     user.password = hash;
+
+    //     check users->insertOne(user);
+
+    //     return "User registered successfully";
+    // }
+
+        // Hospital signup
+    resource function post register(HospitalRegisterRequest req) returns json|error {
+        string id = uuid:createType1AsString();
+        Hospital hospital = {
+            id: id,
+            hospitalName: req.hospitalName,
+            contactPerson: req.contactPerson,
+            contactEmail: req.contactEmail,
+            contactPhone: req.contactPhone,
+            address: req.address,
+            password: req.password
+        };
+
+        mongodb:Collection hospitals = check self.pulselinkDB->getCollection("hospitals");
+        
+        // Check for duplicate email
+        Hospital? existingHospital = check hospitals->findOne({contactEmail: hospital.contactEmail});
+        if existingHospital is Hospital {
+            return {
+                success: false,
+                message: "Email already exists"
+            };
         }
 
-        string|crypto:Error hash = crypto:hashBcrypt(user.password);
+        // Hash password
+        string|crypto:Error hash = crypto:hashBcrypt(hospital.password);
         if hash is crypto:Error {
-            return error("Failed to hash password");
+            return {
+                success: false,
+                message: "Failed to hash password"
+            };
         }
-        user.password = hash;
+        hospital.password = hash;
 
-        check users->insertOne(user);
+        check hospitals->insertOne(hospital);
 
-        return "User registered successfully";
+        return {
+            success: true,
+            message: "Hospital registered successfully"
+        };
     }
 
     // login
-    resource function post login(LoginRequest req) returns string|error {
-        mongodb:Collection users = check self.pulselinkDB->getCollection("users");
-        User? user = check users->findOne({email : req.email});
-        if user is () {
-            return error("User not found");
+    resource function post login(LoginRequest req) returns json|error {
+        mongodb:Collection hospitals = check self.pulselinkDB->getCollection("hospitals");
+        Hospital? hospital = check hospitals->findOne({contactEmail : req.contactEmail});
+        if hospital is () {
+            return {
+                success: false,
+                message: "Hospital not found"
+            };
         }
 
-        boolean|crypto:Error isValid = crypto:verifyBcrypt(req.password, user.password);
+        boolean|crypto:Error isValid = crypto:verifyBcrypt(req.password, hospital.password);
         if isValid is crypto:Error {
-            return error("Failed to verify password");
+            return {
+                success: false,
+                message: "Failed to verify password"
+            };
         }
         if !isValid {
-            return error("Invalid email or password");
+            return {
+                success: false,
+                message: "Invalid email or password"
+            };
         }
 
-        return "Login successful";
+        return {
+            success: true,
+            message: "Login successful",
+            hospital: {
+                hospitalName: hospital.hospitalName,
+                contactEmail: hospital.contactEmail
+            }
+        };
     }
 
 }
