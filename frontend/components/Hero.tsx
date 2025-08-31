@@ -43,13 +43,13 @@ export default function Hero() {
 
               <Link 
                 href="/donor-registration"
-                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors text-center transform hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-200"
+                className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors text-center transform hover:scale-105 shadow-lg hover:shadow-xl duration-200"
               >
                 Become a Donor
               </Link>
               <Link 
                 href="/patient-registration"
-                className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors text-center transform hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-200"
+                className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-lg font-semibold text-center transform hover:scale-105 shadow-lg hover:shadow-xl transition-all duration-200"
 
               >
                 Need an Organ
