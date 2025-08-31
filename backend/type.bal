@@ -71,6 +71,10 @@ public type Patient record {
     // Identification and Verification
     string identificationType;
     string idNumber;
+
+    // Hospital Information
+    string hospitalName?;
+    string hospitalEmail?;
 };
 
 public type PatientRegistrationRequest record {
@@ -100,6 +104,10 @@ public type PatientRegistrationRequest record {
     // Identification and Verification
     string identificationType;
     string idNumber;
+
+    // Hospital Information
+    string hospitalName?;
+    string hospitalEmail?;
 };
 
 public type Donor record {

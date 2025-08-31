@@ -140,7 +140,11 @@ service /api on new http:Listener(9090) {
             estimatedSurvival: req.estimatedSurvival,
 
             identificationType: req.identificationType,
-            idNumber: req.idNumber
+            idNumber: req.idNumber,
+
+            // Add hospital information
+            hospitalName: req.hospitalName,
+            hospitalEmail: req.hospitalEmail
         };
 
         mongodb:Collection patients = check self.pulselinkDB->getCollection("patients");
