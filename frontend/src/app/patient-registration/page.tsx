@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { getHospital } from "@/utils/auth";
 
 export default function PatientRegistrationPage() {
   const [formData, setFormData] = useState({
@@ -44,6 +45,18 @@ export default function PatientRegistrationPage() {
     type: "success" | "error";
     text: string;
   } | null>(null);
+
+  useEffect(() => {
+    // Pre-fill hospital information when component mounts
+    const hospitalInfo = getHospital();
+    if (hospitalInfo) {
+      setFormData((prev) => ({
+        ...prev,
+        // You can add hospitalName to the form state if you want to display it in the UI
+        // or just use it in the submission
+      }));
+    }
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -104,6 +117,9 @@ export default function PatientRegistrationPage() {
         return;
       }
 
+      // Get hospital info from cookies
+      const hospitalInfo = getHospital();
+
       // Prepare the data to send to API
       const patientData = {
         fullName: formData.fullName,
@@ -128,20 +144,24 @@ export default function PatientRegistrationPage() {
 
         identificationType: formData.identificationType,
         idNumber: formData.idNumber,
+
+        // Add hospital information from cookies if available
+        hospitalName: hospitalInfo?.hospitalName || "",
+        hospitalEmail: hospitalInfo?.contactEmail || "",
       };
 
+      // Define API URL with fallback
+      const API_URL =
+        process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:9090/api";
+
       // Make API call
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/patients/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(patientData),
-        }
-      );
-      console.log(`${process.env.NEXT_PUBLIC_BACKEND_URL}/patients/register`);
+      const response = await fetch(`${API_URL}/patients/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(patientData),
+      });
 
       const result = await response.json();
 
@@ -231,17 +251,6 @@ export default function PatientRegistrationPage() {
         {/* Main Content */}
         <div className="max-w-4xl mx-auto px-4 py-8">
           {/* Show success/error message */}
-          {submitMessage && (
-            <div
-              className={`mb-6 p-4 rounded-lg ${
-                submitMessage.type === "success"
-                  ? "bg-green-800/50 text-green-200"
-                  : "bg-red-800/50 text-red-200"
-              }`}
-            >
-              {submitMessage.text}
-            </div>
-          )}
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Personal Information Section */}
@@ -564,7 +573,6 @@ export default function PatientRegistrationPage() {
                     </div>
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Blood Type
@@ -655,7 +663,6 @@ export default function PatientRegistrationPage() {
                     </div>
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Risk Fatality
@@ -715,7 +722,6 @@ export default function PatientRegistrationPage() {
                     </div>
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Urgency Level
@@ -776,7 +782,6 @@ export default function PatientRegistrationPage() {
                     </div>
                   </div>
                 </div>
-
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Estimated Survival
@@ -790,7 +795,6 @@ export default function PatientRegistrationPage() {
                     placeholder="ex: 6 weeks (current) vs multiple years"
                   />
                 </div>
-
                 Crossmatch Test Report Upload
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -1004,6 +1008,28 @@ export default function PatientRegistrationPage() {
                 </label>
               </div>
             </section>
+            {/* Hospital Information Banner */}
+            {getHospital() && (
+              <div className="bg-gray-800/30 backdrop-blur-sm rounded-lg p-4 border border-gray-700/50 mt-6">
+                <p className="text-sm text-gray-300">
+                  This patient will be registered by{" "}
+                  <span className="font-semibold text-green-400">
+                    {getHospital()?.hospitalName}
+                  </span>
+                </p>
+              </div>
+            )}
+            {submitMessage && (
+            <div
+              className={`mb-6 p-4 rounded-lg ${
+                submitMessage.type === "success"
+                  ? "bg-green-800/50 text-green-200"
+                  : "bg-red-800/50 text-red-200"
+              }`}
+            >
+              {submitMessage.text}
+            </div>
+          )}
 
             {/* Submit Button */}
             <div className="pt-6">
@@ -1050,6 +1076,7 @@ export default function PatientRegistrationPage() {
                 ← Back to Home
               </Link>
             </div>
+            
           </form>
         </div>
       </div>
